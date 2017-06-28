@@ -1,2 +1,2 @@
 # SwissR
-Swiss `R`my knife -- utilities for working in R
+Swiss a`R`my knife -- utilities for working in R
