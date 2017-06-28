@@ -24,7 +24,7 @@ RefreshPackage = function(packPath, useLocal = FALSE, name = NULL,
 # TODO: implement default name inference for package from URL (e.g., GitHub).
   
   # Local source for installation needs existence and explicit specification.
-  local = file_test(packPath, "-d") & useLocal
+  local = file_test("-d", packPath) & useLocal
 
   # Install.
   if (local) { devtools::install_local(packPath) }
