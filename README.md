@@ -1,2 +1,2 @@
-# RUtils
-Utilities for working in R
+# SwissR
+Swiss `R`my knife -- utilities for working in R
