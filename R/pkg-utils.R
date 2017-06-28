@@ -46,6 +46,7 @@ RefreshPackage = function(packPath, useLocal = FALSE, name = NULL,
     # An alternative control flow here would be to set a NULL packPath and 
     # then do one check at the end. Instead, do control flow with early 
     # returns so that we can provide case-specific messaging.
+    
     if (is.null(nameFromUrl)) {
       sprintf("Installed package from '%s', but it cannot be loaded with 
         neither a name nor a strategy with which to infer one.", packPath)
@@ -53,7 +54,8 @@ RefreshPackage = function(packPath, useLocal = FALSE, name = NULL,
       # Early return since we lack name and inference strategy.
       return()
     }
-    packName = nameFromUrl(packPath) }
+    
+    packName = nameFromUrl(packPath)
     if (is.null(packName) | identical("", packName)) {
       msg = sprintf("Failed to infer name for package installed from '%s', 
         so no attempt will be made to load it.", packPath)
