@@ -43,13 +43,24 @@ RefreshPackage = function(packPath, useLocal = FALSE, name = NULL,
   if (!is.null(name)) { packName = name }
   else if (local) { packName = basename(packPath) }
   else {
+    # An alternative control flow here would be to set a NULL packPath and 
+    # then do one check at the end. Instead, do control flow with early 
+    # returns so that we can provide case-specific messaging.
     if (is.null(nameFromUrl)) {
-      warning(sprintf(
-        "Installed package from '%s' but could not infer name to reload", 
-        packPath))
+      sprintf("Installed package from '%s', but it cannot be loaded with 
+        neither a name nor a strategy with which to infer one.", packPath)
+      warning(msg)
+      # Early return since we lack name and inference strategy.
+      return()
     }
-    # Early return since we have nothing to load.
-    return()
+    packName = nameFromUrl(packPath) }
+    if (is.null(packName) | identical("", packName)) {
+      msg = sprintf("Failed to infer name for package installed from '%s', 
+        so no attempt will be made to load it.", packPath)
+      warning(msg)
+      # Early return since the name inference failed.
+      return()
+    }
   }
 
   # Reload the package if a name was given or successfully inferred.
