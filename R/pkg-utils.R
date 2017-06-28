@@ -16,11 +16,15 @@ library("devtools")
 #'
 #' @param packPath Path to the package to install and load.
 #' @param useLocal Whether to use local source for the installation.
-#' @param name Name for the package to load.
-#' @param nameFromUrl Strategy with which to infer package name from URL.
+#' @param name Name for the package to load, or a strategy with which it 
+#'             is to be inferred. If omitted, then the package is simply 
+#'             reinstalled, not also reloaded.
+#' @param nameFromUrl Strategy with which to infer package name from URL, 
+#'                    optional; this is only used if \code{useLocal} is 
+#'                    \code{FALSE}. Omit to only reinstall and skip reload.
 #' @export
-RefreshPackage = function(packPath, useLocal = FALSE, name = NULL, 
-  nameFromUrl = NULL) {
+RefreshPackage = function(packPath, useLocal, 
+  name = NULL, nameFromUrl = NULL) {
 # TODO: implement default name inference for package from URL (e.g., GitHub).
   
   # Local source for installation needs existence and explicit specification.
@@ -66,6 +70,6 @@ RefreshPackage = function(packPath, useLocal = FALSE, name = NULL,
   }
 
   # Reload the package if a name was given or successfully inferred.
-  library(packName)
+  library(packName, character.only = TRUE)
 
 }
