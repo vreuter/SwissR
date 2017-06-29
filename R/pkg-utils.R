@@ -15,7 +15,7 @@ library("devtools")
 #' the attempt to load the package is skipped.
 #'
 #' @param packPath Path to the package to install and load.
-#' @param useLocal Whether to use local source for the installation.
+#' @param useLocal Use local source for the installation, default \code{TRUE}.
 #' @param name Name for the package to load, or a strategy with which it 
 #'             is to be inferred. If omitted, then the package is simply 
 #'             reinstalled, not also reloaded.
@@ -23,7 +23,7 @@ library("devtools")
 #'                    optional; this is only used if \code{useLocal} is 
 #'                    \code{FALSE}. Omit to only reinstall and skip reload.
 #' @export
-RefreshPackage = function(packPath, useLocal, 
+RefreshPackage = function(packPath, useLocal = TRUE, 
   name = NULL, nameFromUrl = NULL) {
 # TODO: implement default name inference for package from URL (e.g., GitHub).
   
