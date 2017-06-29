@@ -4,17 +4,20 @@
 \alias{RefreshPackage}
 \title{Installer and loader of a package, either local or from github}
 \usage{
-RefreshPackage(packPath, useLocal = FALSE, name = NULL,
-  nameFromUrl = NULL)
+RefreshPackage(packPath, useLocal = TRUE, name = NULL, nameFromUrl = NULL)
 }
 \arguments{
 \item{packPath}{Path to the package to install and load.}
 
-\item{useLocal}{Whether to use local source for the installation.}
+\item{useLocal}{Use local source for the installation, default \code{TRUE}.}
 
-\item{name}{Name for the package to load.}
+\item{name}{Name for the package to load, or a strategy with which it 
+is to be inferred. If omitted, then the package is simply 
+reinstalled, not also reloaded.}
 
-\item{nameFromUrl}{Strategy with which to infer package name from URL.}
+\item{nameFromUrl}{Strategy with which to infer package name from URL, 
+optional; this is only used if \code{useLocal} is 
+\code{FALSE}. Omit to only reinstall and skip reload.}
 }
 \description{
 \code{RefreshPackage} takes a path to a file or folder, or a URL,  

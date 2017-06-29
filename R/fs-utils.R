@@ -25,6 +25,7 @@ ExpandPath = function(path) {
     if (startsWith(pathPart, "$")) {
       system(sprintf("echo %s", pathPart), intern = TRUE)
     } else { pathPart }
+  }
 
   # Split path; short-circuit return or ensure no reference to this folder.
   parts = chopPath(path)
