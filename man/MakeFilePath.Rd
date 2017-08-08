@@ -4,7 +4,7 @@
 \alias{MakeFilePath}
 \title{Builder of path to epilog output file within project's results folder.}
 \usage{
-MakeFilePath(base, sampleName, subdir, extension)
+MakeFilePath(base, sampleName, subdir, extension, suffix = NULL)
 }
 \arguments{
 \item{base}{Project configuration object (environment- or list-like), from
@@ -20,6 +20,10 @@ the file to live within a results subfolder named with the
 name of the subfolder within the project's results folder. 
 If a function, it should accept \code{sampleName} and the 
 derive a name for the appropriate subfolder that way.}
+
+\item{suffix}{Text to place between the sample name and the extension.
+The default is no suffix, which will also result from an 
+argument that's empty, \code{NULL}, or \code{FALSE}.}
 }
 \value{
 Path expected for file for the project defined by \code{base} and 

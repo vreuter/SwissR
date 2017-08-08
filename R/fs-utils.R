@@ -58,19 +58,35 @@ ExpandPath = function(path) {
 #'               name of the subfolder within the project's results folder. 
 #'               If a function, it should accept \code{sampleName} and the 
 #'               derive a name for the appropriate subfolder that way.
+#' @param suffix Text to place between the sample name and the extension.
+#'               The default is no suffix, which will also result from an 
+#'               argument that's empty, \code{NULL}, or \code{FALSE}.
 #' @return Path expected for file for the project defined by \code{base} and 
 #'              the sample indicated by \code{sampleName}. The correspondence 
 #'              with file type/format is captured by the \code{subdir} and 
 #'              \code{extension} specifications.
 #' @export
-MakeFilePath = function(base, sampleName, subdir, extension) {
+MakeFilePath = function(base, sampleName, subdir, extension, suffix = NULL) {
+
+  if (is.null(suffix) | identical("", suffix) | (is.logical(suffix) & !suffix)) {
+    nameBase = sampleName
+  } else {
+    nameBase = paste0(sampleName, suffix)
+  }
+
+  # Filename can be constructed right awawy since it doesn't depend on any 
+  # of the logic regarding input type for base or subdir.
+  filename = sprintf("%s.%s", nameBase, extension)
   
+  # Allow base to be raw text or a project config (named/nested list).
   if (!is.character(base)) { base = base$metadata$results_subdir }
 
   # Allow Boolean or callable argument to subdir parameter (rather than text).
-  if(is.logical(subdir)) { subdir = sampleName }
-  else if (is.function(subdir)) { subdir = subdir(sampleName) }
+  if(is.logical(subdir)) {
+    # Omit subdir if it's toggled off; otherwise, use sample name.
+    if (!subdir) { return(file.path(base, filename)) }
+    subdir = sampleName
+  } else if (is.function(subdir)) { subdir = subdir(sampleName) }
   
-  filename = sprintf("%s.%s", sampleName, extension)
   return(file.path(base, subdir, filename))
 }
