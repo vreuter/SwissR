@@ -68,11 +68,9 @@ ExpandPath = function(path) {
 #' @export
 MakeFilePath = function(base, sampleName, subdir, extension, suffix = NULL) {
 
-  if (is.null(suffix) | identical("", suffix) | (is.logical(suffix) & !suffix)) {
-    nameBase = sampleName
-  } else {
-    nameBase = paste0(sampleName, suffix)
-  }
+  # Use sample name as filename base, possibly with suffix.
+  nameBase = sampleName
+  if (is.character(suffix)) { nameBase = paste0(nameBase, suffix) }
 
   # Filename can be constructed right awawy since it doesn't depend on any 
   # of the logic regarding input type for base or subdir.
