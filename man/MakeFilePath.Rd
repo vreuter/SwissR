@@ -2,7 +2,7 @@
 % Please edit documentation in R/fs-utils.R
 \name{MakeFilePath}
 \alias{MakeFilePath}
-\title{Builder of path to epilog output file within project's results folder.}
+\title{Builder of path to file within project's results folder.}
 \usage{
 MakeFilePath(base, sampleName, subdir, extension, suffix = NULL)
 }

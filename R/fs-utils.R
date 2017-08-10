@@ -38,7 +38,7 @@ ExpandPath = function(path) {
 }
 
 
-#' Builder of path to epilog output file within project's results folder.
+#' Builder of path to file within project's results folder.
 #'
 #' \code{MakeFilePath} uses information about file paths from a project 
 #' configuration object, in conjunction with a sample name and how to 
@@ -87,4 +87,25 @@ MakeFilePath = function(base, sampleName, subdir, extension, suffix = NULL) {
   } else if (is.function(subdir)) { subdir = subdir(sampleName) }
   
   return(file.path(base, subdir, filename))
+}
+
+
+#' Builder of folder(s)
+#'
+#' \code{makedirs} creates a folder and any intermediates needed, 
+#' doing nothing if the folder already exists.
+#'
+#' @param dirpath Full path to the folder to create.
+#' @param permissions Permissions string.
+#' @param forceChmod Whether to change the permissions to the given 
+#'                   setting if the folder already exists.
+#' @export
+makedirs = function(dirpath, permissions = "0777", forceChmod = FALSE) {
+  if (file_test("-d", dirpath)) {
+    if (forceChmod) { Sys.chmod(dirpath, mode = permissions) }
+    return(FALSE)
+  } else {
+    dir.create(dirpath, recursive = TRUE, mode = permissions)
+    return(TRUE)
+  }
 }

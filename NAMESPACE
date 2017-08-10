@@ -3,3 +3,4 @@
 export(ExpandPath)
 export(MakeFilePath)
 export(RefreshPackage)
+export(makedirs)
