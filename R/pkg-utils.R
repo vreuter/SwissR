@@ -3,9 +3,50 @@
 library("devtools")
 
 
+#' Finder of package installation source location candidates.
+#'
+#' \code{locatePackage} uses a package name, path(s) to folder(s), and 
+#' some environment variables to find all of the extant location candidates 
+#' for the installation from source for package indicated by \code{name}.
+#'
+#' @param pkg_name Name of the package of interest.
+#' @param paths Collection of full filepaths, each of which should be 
+#'              considered for the presence of package \code{pkg_name}.
+#' @param env_vars Names of environment variables, each of which should 
+#'                 point to a filepath to consider for the presence of 
+#'                 \code{pkg_name}.
+#' @return The collection of paths to extant candidates for installation of 
+#'         \code{pkg_name}.
+#' @family packages
+#' @export
+locatePackage = function(
+  pkg_name, paths = NULL, env_vars = c("STAGE", "CODE", "CODEBASE")) {
+  
+  # Prioritize explicitly specified paths.
+  if (is.null(paths)) {
+    candidates = c()
+  } else {
+    pathCandidates = sapply(
+      X = paths, FUN = function(basepath) {.filepath(basepath, pkg_name)})
+    # Nulls will cause error here, but that's OK; there shouldn't be NULLs.
+    candidates = pathCandidates[which(sapply(
+      X = pathCandidates, FUN = function(p) { file_test("-d", p) }))]
+  }
+  
+  # Secondarily, consider environment variables.
+  varCandidates = sapply(X = env_vars, 
+    FUN = function(var) { .envVarPath(var, pkg_name) })
+  candidates = append(candidates, 
+    varCandidates[-which(is.null(varCandidates))])
+  
+  return(candidates[which(sapply(X = candidates, FUN = .isDir))])
+}
+
+
+
 #' Installer and loader of a package, either local or from github
 #'
-#' \code{RefreshPackage} takes a path to a file or folder, or a URL,  
+#' \code{refreshPackage} takes a path to a file or folder, or a URL,  
 #' determines whether it exists, and installs it. In order for local 
 #' source to be used, the path given must exist locally and \code{useLocal} 
 #' must be true. Once the package given by \code{packPath} is installed, 
@@ -22,8 +63,9 @@ library("devtools")
 #' @param nameFromUrl Strategy with which to infer package name from URL, 
 #'                    optional; this is only used if \code{useLocal} is 
 #'                    \code{FALSE}. Omit to only reinstall and skip reload.
+#' @family packages
 #' @export
-RefreshPackage = function(packPath, useLocal = TRUE, 
+refreshPackage = function(packPath, useLocal = TRUE, 
   name = NULL, nameFromUrl = NULL) {
 # TODO: implement default name inference for package from URL (e.g., GitHub).
   

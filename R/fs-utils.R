@@ -12,6 +12,7 @@
 #'
 #' @param path The filesystem path to expand.
 #' @return Input path with user/environment variables expanded.
+#' @family paths
 #' @export
 ExpandPath = function(path) {
 
@@ -62,9 +63,10 @@ ExpandPath = function(path) {
 #'               The default is no suffix, which will also result from an 
 #'               argument that's empty, \code{NULL}, or \code{FALSE}.
 #' @return Path expected for file for the project defined by \code{base} and 
-#'              the sample indicated by \code{sampleName}. The correspondence 
-#'              with file type/format is captured by the \code{subdir} and 
-#'              \code{extension} specifications.
+#'         the sample indicated by \code{sampleName}. The correspondence 
+#'         with file type/format is captured by the \code{subdir} and 
+#'         \code{extension} specifications.
+#' @family paths
 #' @export
 MakeFilePath = function(base, sampleName, subdir, extension, suffix = NULL) {
 
@@ -97,15 +99,64 @@ MakeFilePath = function(base, sampleName, subdir, extension, suffix = NULL) {
 #'
 #' @param dirpath Full path to the folder to create.
 #' @param permissions Permissions string.
-#' @param forceChmod Whether to change the permissions to the given 
-#'                   setting if the folder already exists.
+#' @param force_chmod Whether to change the permissions to the given 
+#'                    setting if the folder already exists.
+#' @family paths
 #' @export
-makedirs = function(dirpath, permissions = "0777", forceChmod = FALSE) {
+makedirs = function(dirpath, permissions = "0777", force_chmod = FALSE) {
   if (file_test("-d", dirpath)) {
-    if (forceChmod) { Sys.chmod(dirpath, mode = permissions) }
+    if (force_chmod) { Sys.chmod(dirpath, mode = permissions) }
     return(FALSE)
   } else {
     dir.create(dirpath, recursive = TRUE, mode = permissions)
     return(TRUE)
   }
+}
+
+
+#' Filepath builder leveraging environment variable
+#'
+#' \code{.envVarPath} uses the name of an environment variable and the name 
+#' of a folder to create a filepath.
+#'
+#' @param var_name The name of the environment variable, the value of which 
+#'                 is used as the base for the filepath that's constructed. 
+#'                 That base is what will be returned from something like 
+#'                 \code{dirname(filepath)}, with \code{filepath} being the 
+#'                 value returned by this function.
+#' @param folder Name for folder under the value of \code{var_name}.
+#' @return The filepath with the value of \code{var_name} as the based/parent 
+#'         folder and \code{folder} within it. \code{NULL} if the environment 
+#'         variable is not defined.
+#' @family paths
+.envVarPath = function(var_name, folder) {
+  var_path = Sys.getenv(var_name)
+  if ( is.null(var_path) | identical("", var_path) ) { return(NULL) }
+  return(file.path(var_path, folder))
+}
+
+
+#' Basic filepath builder.
+#'
+#' \code{.filepath} expands a base filepath and joins it to a folder name.
+#'
+#' @param base A base filepath to which to join a folder name.
+#' @param folder The name to join to \code{base} to create a filepath.
+#' @family paths
+.filepath = function(base, folder) { file.path(path.expand(base), folder) }
+
+
+#' Judge of existence of path as a directory
+#'
+#' \code{.isDir} determines whether a given path is an extant directory.
+#' This is a convenience function, wrapping \code{file_test} and handling 
+#' \code{NULL} or empty input path.
+#'
+#' @param path The path to test for status as extant directory.
+#' @return Whether the given path is an extant directory. \code{FALSE} if 
+#'         \code{path} is \code{NULL} or empty.
+#' @family paths
+.isDir = function(path) {
+  if ( is.null(path) | identical("", path) ) { return(FALSE) }
+  return(file_test("-d", path))
 }
