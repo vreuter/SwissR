@@ -48,7 +48,7 @@ locatePackage = function(
 #'
 #' \code{refreshPackage} takes a path to a file or folder, or a URL,  
 #' determines whether it exists, and installs it. In order for local 
-#' source to be used, the path given must exist locally and \code{useLocal} 
+#' source to be used, the path given must exist locally and \code{local} 
 #' must be true. Once the package given by \code{packPath} is installed, 
 #' this function attempts to load the package, using either a given name or 
 #' an inferred one. If no \code{name} is given and the name inference 
@@ -56,27 +56,27 @@ locatePackage = function(
 #' the attempt to load the package is skipped.
 #'
 #' @param packPath Path to the package to install and load.
-#' @param useLocal Use local source for the installation, default \code{TRUE}.
+#' @param local Use local source for the installation, default \code{TRUE}.
 #' @param name Name for the package to load, or a strategy with which it 
 #'             is to be inferred. If omitted, then the package is simply 
 #'             reinstalled, not also reloaded.
 #' @param nameFromUrl Strategy with which to infer package name from URL, 
-#'                    optional; this is only used if \code{useLocal} is 
+#'                    optional; this is only used if \code{local} is 
 #'                    \code{FALSE}. Omit to only reinstall and skip reload.
 #' @family packages
 #' @export
-refreshPackage = function(packPath, useLocal = TRUE, 
+refreshPackage = function(packPath, local = TRUE, 
   name = NULL, nameFromUrl = NULL) {
 # TODO: implement default name inference for package from URL (e.g., GitHub).
   
   # Local source for installation needs existence and explicit specification.
-  local = file_test("-d", packPath) & useLocal
+  local = file_test("-d", packPath) && local
 
   # Install.
   if (local) { devtools::install_local(packPath) }
   else {
     # If local installation was requested but not possible, issue warning.
-    if (useLocal) { 
+    if (local) { 
       warning(sprintf(
         "Could not use local install option for '%s'; does it exist?", 
         packPath))
