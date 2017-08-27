@@ -4,7 +4,7 @@
 \alias{locatePackage}
 \title{Finder of package installation source location candidates.}
 \usage{
-locatePackage(pkg_name, paths = NULL, env_vars = c("STAGE", "CODE",
+locatePackage(pkg_name, paths = NULL, env_vars = c("CODE", "STAGE",
   "CODEBASE"))
 }
 \arguments{
@@ -18,8 +18,7 @@ point to a filepath to consider for the presence of
 \code{pkg_name}.}
 }
 \value{
-The collection of paths to extant candidates for installation of 
-        \code{pkg_name}.
+Path to first location at which \code{pkgName} exists.
 }
 \description{
 \code{locatePackage} uses a package name, path(s) to folder(s), and 

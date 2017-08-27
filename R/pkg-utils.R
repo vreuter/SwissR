@@ -38,7 +38,9 @@ locatePackage = function(
   candidates = append(candidates, 
     varCandidates[-which(is.null(varCandidates))])
   
-  pkg_path = candidates[which(sapply(X = candidates, FUN = .isDir))][1]
+  indexer = sapply(X = candidates, FUN = .isDir)
+  message(class(indexer))
+  pkg_path = which(indexer)[1]
   if (is.na(pkg_path)) NULL else pkg_path
 }
 

@@ -21,5 +21,5 @@ doing nothing if the folder already exists.
 \seealso{
 Other paths: \code{\link{.envVarPath}},
   \code{\link{.filepath}}, \code{\link{.isDir}},
-  \code{\link{ExpandPath}}, \code{\link{MakeFilePath}}
+  \code{\link{expandPath}}, \code{\link{makeFilePath}}
 }

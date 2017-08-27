@@ -5,7 +5,7 @@
 
 #' Path expansion utility
 #'
-#' \code{ExpandPath} takes a path and expands user/environment variables.
+#' \code{expandPath} takes a path and expands user/environment variables.
 #' \code{NULL}, \code{NA}, and empty path inputs are returned as-is. For 
 #' environment variables, the assumption is that each will be prefixed with 
 #' a dollar-sign \code{$}.
@@ -14,7 +14,7 @@
 #' @return Input path with user/environment variables expanded.
 #' @family paths
 #' @export
-ExpandPath = function(path) {
+expandPath = function(path) {
 
   # Handle null/empty input.
   if (is.null(path) | is.na(path) | identical("", path)) { return(path) }
@@ -41,7 +41,7 @@ ExpandPath = function(path) {
 
 #' Builder of path to file within project's results folder.
 #'
-#' \code{MakeFilePath} uses information about file paths from a project 
+#' \code{makeFilePath} uses information about file paths from a project 
 #' configuration object, in conjunction with a sample name and how to 
 #' deal with subfolder(s), to create a path to the output file that's 
 #' known to the project for the sample indicated by \code{sampleName}, and 
@@ -68,7 +68,7 @@ ExpandPath = function(path) {
 #'         \code{extension} specifications.
 #' @family paths
 #' @export
-MakeFilePath = function(base, sampleName, subdir, extension, suffix = NULL) {
+makeFilePath = function(base, sampleName, subdir, extension, suffix = NULL) {
 
   # Use sample name as filename base, possibly with suffix.
   nameBase = sampleName
