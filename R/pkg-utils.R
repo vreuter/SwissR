@@ -15,12 +15,11 @@ library("devtools")
 #' @param env_vars Names of environment variables, each of which should 
 #'                 point to a filepath to consider for the presence of 
 #'                 \code{pkg_name}.
-#' @return The collection of paths to extant candidates for installation of 
-#'         \code{pkg_name}.
+#' @return Path to first location at which \code{pkgName} exists.
 #' @family packages
 #' @export
 locatePackage = function(
-  pkg_name, paths = NULL, env_vars = c("STAGE", "CODE", "CODEBASE")) {
+  pkg_name, paths = NULL, env_vars = c("CODE", "STAGE", "CODEBASE")) {
   
   # Prioritize explicitly specified paths.
   if (is.null(paths)) {
@@ -39,7 +38,8 @@ locatePackage = function(
   candidates = append(candidates, 
     varCandidates[-which(is.null(varCandidates))])
   
-  return(candidates[which(sapply(X = candidates, FUN = .isDir))])
+  pkg_path = candidates[which(sapply(X = candidates, FUN = .isDir))][1]
+  if (is.na(pkg_path)) NULL else pkg_path
 }
 
 
@@ -69,6 +69,17 @@ refreshPackage = function(packPath, local = TRUE,
   name = NULL, nameFromUrl = NULL) {
 # TODO: implement default name inference for package from URL (e.g., GitHub).
   
+  # First, use information about desire to use local code to determine 
+  # whether we should try to expand the argument to the package path 
+  # parameter. Specifically, if installation from local source is desired, 
+  # then the argument specifying the package may just be a name rather than 
+  # a path.
+  if (local && !file_test("-d", packPath)) {
+    message(sprintf(
+      "Attempting local install, trying path expansion for '%s'", packPath))
+    packPath = locatePackage(packPath)
+  }
+
   # Local source for installation needs existence and explicit specification.
   local = file_test("-d", packPath) && local
 
