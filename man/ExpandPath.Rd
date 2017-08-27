@@ -18,3 +18,8 @@ Input path with user/environment variables expanded.
 environment variables, the assumption is that each will be prefixed with 
 a dollar-sign \code{$}.
 }
+\seealso{
+Other paths: \code{\link{.envVarPath}},
+  \code{\link{.filepath}}, \code{\link{.isDir}},
+  \code{\link{MakeFilePath}}, \code{\link{makedirs}}
+}

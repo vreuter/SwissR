@@ -2,5 +2,6 @@
 
 export(ExpandPath)
 export(MakeFilePath)
-export(RefreshPackage)
+export(locatePackage)
 export(makedirs)
+export(refreshPackage)

@@ -4,17 +4,22 @@
 \alias{makedirs}
 \title{Builder of folder(s)}
 \usage{
-makedirs(dirpath, permissions = "0777", forceChmod = FALSE)
+makedirs(dirpath, permissions = "0777", force_chmod = FALSE)
 }
 \arguments{
 \item{dirpath}{Full path to the folder to create.}
 
 \item{permissions}{Permissions string.}
 
-\item{forceChmod}{Whether to change the permissions to the given 
+\item{force_chmod}{Whether to change the permissions to the given 
 setting if the folder already exists.}
 }
 \description{
 \code{makedirs} creates a folder and any intermediates needed, 
 doing nothing if the folder already exists.
+}
+\seealso{
+Other paths: \code{\link{.envVarPath}},
+  \code{\link{.filepath}}, \code{\link{.isDir}},
+  \code{\link{ExpandPath}}, \code{\link{MakeFilePath}}
 }
