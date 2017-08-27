@@ -26,7 +26,7 @@ locatePackage = function(
     candidates = c()
   } else {
     pathCandidates = sapply(
-      X = paths, FUN = function(basepath) {.filepath(basepath, pkg_name)})
+      X = paths, FUN = function(basepath) {.filepath(basepath, pkg_name)} )
     # Nulls will cause error here, but that's OK; there shouldn't be NULLs.
     candidates = pathCandidates[which(sapply(
       X = pathCandidates, FUN = function(p) { file_test("-d", p) }))]
@@ -35,15 +35,10 @@ locatePackage = function(
   # Secondarily, consider environment variables.
   varCandidates = sapply(X = env_vars, 
     FUN = function(var) { .envVarPath(var, pkg_name) })
-  candidates = append(candidates, 
-    varCandidates[-which(is.null(varCandidates))])
-  
-  # DEBUG
-  indexer = sapply(X = candidates, FUN = .isDir)
-  message("Candidates: ", class(candidates))
-  message(class(indexer))
-  message(length(indexer))
-  pkg_path = which(indexer)[1]
+  candidates = append(candidates, varCandidates)
+
+  isDirMask = sapply(X = candidates, FUN = .isDir)
+  pkg_path = candidates[which(isDirMask)][1]
   if (is.na(pkg_path)) NULL else pkg_path
 }
 
@@ -68,10 +63,12 @@ locatePackage = function(
 #' @param nameFromUrl Strategy with which to infer package name from URL, 
 #'                    optional; this is only used if \code{local} is 
 #'                    \code{FALSE}. Omit to only reinstall and skip reload.
+#' @param load Whether to load the package into the global environment 
+#'             if it was successfully located and installed.
 #' @family packages
 #' @export
 refreshPackage = function(packPath, local = TRUE, 
-  name = NULL, nameFromUrl = NULL) {
+  name = NULL, nameFromUrl = NULL, load = TRUE) {
 # TODO: implement default name inference for package from URL (e.g., GitHub).
   
   # First, use information about desire to use local code to determine 
@@ -86,7 +83,11 @@ refreshPackage = function(packPath, local = TRUE,
   }
 
   # Local source for installation needs existence and explicit specification.
-  local = file_test("-d", packPath) && local
+  if (is.null(packPath)) {
+    local = FALSE
+  } else {
+    local = file_test("-d", packPath) && local
+  }
 
   # Install.
   if (local) { devtools::install_local(packPath) }
@@ -127,7 +128,8 @@ refreshPackage = function(packPath, local = TRUE,
     }
   }
 
-  # Reload the package if a name was given or successfully inferred.
-  library(packName, character.only=TRUE, pos=0)
+  # Reload the package if a name was given or successfully inferred, and 
+  # package loading (not just installation) is actually desired.
+  if (load) { library(packName, character.only=TRUE, pos=0) }
 
 }

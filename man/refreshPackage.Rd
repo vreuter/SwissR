@@ -4,7 +4,8 @@
 \alias{refreshPackage}
 \title{Installer and loader of a package, either local or from github}
 \usage{
-refreshPackage(packPath, local = TRUE, name = NULL, nameFromUrl = NULL)
+refreshPackage(packPath, local = TRUE, name = NULL, nameFromUrl = NULL,
+  load = TRUE)
 }
 \arguments{
 \item{packPath}{Path to the package to install and load.}
@@ -18,6 +19,9 @@ reinstalled, not also reloaded.}
 \item{nameFromUrl}{Strategy with which to infer package name from URL, 
 optional; this is only used if \code{local} is 
 \code{FALSE}. Omit to only reinstall and skip reload.}
+
+\item{load}{Whether to load the package into the global environment 
+if it was successfully located and installed.}
 }
 \description{
 \code{refreshPackage} takes a path to a file or folder, or a URL,  

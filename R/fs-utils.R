@@ -126,12 +126,12 @@ makedirs = function(dirpath, permissions = "0777", force_chmod = FALSE) {
 #'                 value returned by this function.
 #' @param folder Name for folder under the value of \code{var_name}.
 #' @return The filepath with the value of \code{var_name} as the based/parent 
-#'         folder and \code{folder} within it. \code{NULL} if the environment 
-#'         variable is not defined.
+#'         folder and \code{folder} within it. Empty string if the 
+#'         environment variable isn't defined.
 #' @family paths
 .envVarPath = function(var_name, folder) {
   var_path = Sys.getenv(var_name)
-  if ( is.null(var_path) | identical("", var_path) ) { return(NULL) }
+  if ( is.null(var_path) | identical("", var_path) ) { return("") }
   return(file.path(var_path, folder))
 }
 
