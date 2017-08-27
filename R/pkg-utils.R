@@ -38,8 +38,11 @@ locatePackage = function(
   candidates = append(candidates, 
     varCandidates[-which(is.null(varCandidates))])
   
+  # DEBUG
   indexer = sapply(X = candidates, FUN = .isDir)
+  message("Candidates: ", class(candidates))
   message(class(indexer))
+  message(length(indexer))
   pkg_path = which(indexer)[1]
   if (is.na(pkg_path)) NULL else pkg_path
 }
@@ -125,6 +128,6 @@ refreshPackage = function(packPath, local = TRUE,
   }
 
   # Reload the package if a name was given or successfully inferred.
-  library(packName, character.only = TRUE)
+  library(packName, character.only=TRUE, pos=0)
 
 }
