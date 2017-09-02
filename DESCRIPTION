@@ -1,9 +1,11 @@
 Package: SwissR
-Title: What the Package Does (one line, title case)
+Title: Swiss aRmy Knife: R Utilities
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: What license is it under?
+Authors@R: person("Vince", "Reuter", email = "vince.reuter@gmail.com", role = c("aut", "cre"))
+Description: SwissR provides tools for common tasks in R. This includes 
+working with packages, filepaths, and data tables.
+Depends: data.table
+License: GPL
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
