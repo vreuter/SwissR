@@ -13,8 +13,8 @@
 #' @export
 nOfEach = function(dt, column, n) {
   if (n < 1) { stop("Choose to take at least one of each value") }
-  vals = unique(dt[, get(column)])
-  indexer = sapply( X=vals, FUN=function(v) { which(v == vals)[1:n] } )
+  vals = dt[, get(column)]
+  indexer = sapply( X=unique(vals), FUN=function(v) { which(v == vals)[1:n] } )
   dt[indexer, ]
 }
 
