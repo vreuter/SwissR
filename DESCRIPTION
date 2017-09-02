@@ -2,8 +2,7 @@ Package: SwissR
 Title: Swiss aRmy Knife: R Utilities
 Version: 0.0.0.9000
 Authors@R: person("Vince", "Reuter", email = "vince.reuter@gmail.com", role = c("aut", "cre"))
-Description: SwissR provides tools for common tasks in R. This includes 
-working with packages, filepaths, and data tables.
+Description: SwissR provides tools for common tasks in R. This includes working with packages, filepaths, and data tables.
 Depends: data.table
 License: GPL
 Encoding: UTF-8
