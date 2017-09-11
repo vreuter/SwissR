@@ -14,7 +14,11 @@
 #'         \code{singletonTypes}.
 #' @export
 countListItems = function(composite, singletonTypes) {
-  lists = Filter(function(obj) inherits(obj, list), composite)
-  numSingletons = length(Filter(function(obj) inherits(obj, singletonTypes)))
-  if (0 == length(lists)) numSingletons else (numSingletons + countListItems(lists, singletonTypes))
+  lists = Filter(function(obj) inherits(obj, "list"), composite)
+  numSingletons = length(Filter(function(obj) inherits(obj, singletonTypes), composite))
+  if (0 == length(lists)) { numSingletons }
+  else {
+    listsTotal = Reduce(`+`, lapply(X=lists, FUN=function(l) {countListItems(l, singletonTypes)}))
+    numSingletons + listsTotal
+  }
 }
