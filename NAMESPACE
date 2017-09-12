@@ -2,9 +2,11 @@
 
 export(countListItems)
 export(expandPath)
+export(foldRightList)
 export(locatePackage)
 export(makeFilePath)
 export(makedirs)
 export(nOfEach)
 export(oneOfEach)
 export(refreshPackage)
+export(updateFoldRight)
