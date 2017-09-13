@@ -4,10 +4,12 @@
 \alias{shannonEntropy}
 \title{Calculator of Shannon entropy for a vector of observations.}
 \usage{
-shannonEntropy(observations, normalize = FALSE)
+shannonEntropy(observations, normalized = FALSE)
 }
 \arguments{
 \item{observations}{The observed values for which to calculate entropy.}
+
+\item{normalized}{Whether to normalize the entropy (into [0, 1]).}
 }
 \value{
 The Shannon entropy of the empirical distribution defined by 

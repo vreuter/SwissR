@@ -11,10 +11,11 @@
 #' The base two logarithm is used, so the unit for the result is bits.
 #'
 #' @param observations The observed values for which to calculate entropy.
+#' @param normalized Whether to normalize the entropy (into [0, 1]).
 #' @return The Shannon entropy of the empirical distribution defined by 
 #'         the given observations.
 #' @export
-shannonEntropy = function(observations, normalize=FALSE) {
+shannonEntropy = function(observations, normalized=FALSE) {
   # Handle non-factor input.
   if (!is.factor(observations)) {
     observations = factor(observations, levels=unique(observations))
