@@ -24,7 +24,7 @@ shannonEntropy = function(observations) {
   probs = sapply(X=counts, FUN=function(n) n/num_obs)
   # We're protected from zero-probability cases since we've defined the 
   # domain to be the set of unique observations.
-  weighted_information = sapply(X=probs, FUN=function(p) p*(1/p))
+  weighted_information = sapply(X=probs, FUN=function(p) -1*p*log2(1/p))
   sum(weighted_information)
 }
 
