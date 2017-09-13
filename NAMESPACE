@@ -2,6 +2,7 @@
 
 export(binRate)
 export(countListItems)
+export(entropy)
 export(expandPath)
 export(foldRightList)
 export(locatePackage)
@@ -10,4 +11,5 @@ export(makedirs)
 export(nOfEach)
 export(oneOfEach)
 export(refreshPackage)
+export(shannonEntropy)
 export(updateFoldRight)
