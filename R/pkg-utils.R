@@ -65,10 +65,11 @@ locatePackage = function(
 #'                    \code{FALSE}. Omit to only reinstall and skip reload.
 #' @param load Whether to load the package into the global environment 
 #'             if it was successfully located and installed.
+#' @param force Whether to force installation even if there's no hash delta.
 #' @family packages
 #' @export
-refreshPackage = function(packPath, local = TRUE, 
-  name = NULL, nameFromUrl = NULL, load = TRUE) {
+refreshPackage = function(packPath, local=TRUE, 
+  name=NULL, nameFromUrl=NULL, load=TRUE, force=FALSE) {
 # TODO: implement default name inference for package from URL (e.g., GitHub).
   
   # First, use information about desire to use local code to determine 
@@ -90,7 +91,7 @@ refreshPackage = function(packPath, local = TRUE,
   }
 
   # Install.
-  if (local) { devtools::install_local(packPath) }
+  if (local) { devtools::install_local(packPath, force=force) }
   else {
     # If local installation was requested but not possible, issue warning.
     if (local) { 
@@ -98,7 +99,7 @@ refreshPackage = function(packPath, local = TRUE,
         "Could not use local install option for '%s'; does it exist?", 
         packPath))
     }
-    devtools::install_github(packPath)
+    devtools::install_github(packPath, force=force)
   }
 
   # Loading phase
