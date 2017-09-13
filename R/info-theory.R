@@ -33,7 +33,8 @@ shannonEntropy = function(observations, normalized=FALSE) {
 #' Calculator of normalized Shannon entropy for given observations vector.
 #' @seealso \code{\link{shannonEntropy}}
 #' @export
-normalizedShannonEntropy = function(observations) { shannonEntropy(normalized=TRUE) }
+normalizedShannonEntropy = function(observations) {
+  shannonEntropy(observations, normalized=TRUE) }
 
 #' Alias for \code{shannonEntropy}
 #' @seealso \code{\link{shannonEntropy}}
