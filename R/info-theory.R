@@ -27,7 +27,7 @@ shannonEntropy = function(observations, normalized=FALSE) {
   # domain to be the set of unique observations.
   weighted_information = sapply(X=probs, FUN=function(p) p*log2(1/p))
   totalEntropy = sum(weighted_information)
-  if (normalize) totalEntropy/log2(num_obs) else totalEntropy
+  if (normalized) totalEntropy/log2(num_obs) else totalEntropy
 }
 
 #' Calculator of normalized Shannon entropy for given observations vector.
