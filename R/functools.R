@@ -21,7 +21,7 @@
 foldRightList = function(f, items) { Reduce(f, items, init=list()) }
 
 
-#' Helper for creating function argument to list folder.
+#' Helper for creating function argument to rightward list folder.
 #'
 #' Working directly with \code{base::Reduce} can be a little tricky, 
 #' so this function aims to simplify using it. It's intended to be 

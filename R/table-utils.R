@@ -1,6 +1,26 @@
 # table-utils.R
 
 
+#' Creator of long data that preserves individual table identity.
+#'
+#' \code{combineNamedTables} takes a (named) list of data tables and 
+#' interprets each value in \code{names(dts)} as a constant value that should 
+#' be added as \code{newCol} for each observation in each element of \code{dts}.
+#' That is, each table in \code{dts} gets a constant value for \code{newCol}. 
+#' That value is the key/name in the \code{dts} list that maps to the table.
+#' The tables are then combined row-wise to create long data, but original 
+#' table identity is preserved in \code{newCol}.
+#' 
+#' @param dts Named list of data tables to combine.
+#' @param newCol Name for the new field to create in each table.
+#' @return Combined (long) data table.
+#' @export
+combineNamedTables = function(dts, newCol="id") {
+  if (is.null(names(dts))) { stop("Tables collection must have names.") }
+  rbindlist(dts, idcol=newCol)
+}
+
+
 #' Sampler for the first observation of each unique value for a variable.
 #'
 #' \code{oneOfEach} identifies the unique values from a particular column 

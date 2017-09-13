@@ -2,7 +2,7 @@
 % Please edit documentation in R/functools.R
 \name{updateFoldRight}
 \alias{updateFoldRight}
-\title{Helper for creating function argument to list folder.}
+\title{Helper for creating function argument to rightward list folder.}
 \usage{
 updateFoldRight(result, newArg, f)
 }
