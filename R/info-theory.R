@@ -14,7 +14,7 @@
 #' @return The Shannon entropy of the empirical distribution defined by 
 #'         the given observations.
 #' @export
-shannonEntropy = function(observations) {
+shannonEntropy = function(observations, normalize=FALSE) {
   # Handle non-factor input.
   if (!is.factor(observations)) {
     observations = factor(observations, levels=unique(observations))
@@ -25,11 +25,21 @@ shannonEntropy = function(observations) {
   # We're protected from zero-probability cases since we've defined the 
   # domain to be the set of unique observations.
   weighted_information = sapply(X=probs, FUN=function(p) p*log2(1/p))
-  sum(weighted_information)
+  totalEntropy = sum(weighted_information)
+  if (normalize) totalEntropy/log2(num_obs) else totalEntropy
 }
 
+#' Calculator of normalized Shannon entropy for given observations vector.
+#' @seealso \code{\link{shannonEntropy}}
+#' @export
+normalizedShannonEntropy = function(observations) { shannonEntropy(normalized=TRUE) }
 
 #' Alias for \code{shannonEntropy}
 #' @seealso \code{\link{shannonEntropy}}
 #' @export
 entropy = shannonEntropy
+
+#' Alias for \code{normalizedShannonEntropy}
+#' @seealso \code{\link{shannonEntropy}}, \code{\link{normalizedShannonEntropy}}
+#' @export
+normalizedEntropy = normalizedShannonEntropy

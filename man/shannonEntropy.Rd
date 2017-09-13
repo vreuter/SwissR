@@ -4,7 +4,7 @@
 \alias{shannonEntropy}
 \title{Calculator of Shannon entropy for a vector of observations.}
 \usage{
-shannonEntropy(observations)
+shannonEntropy(observations, normalize = FALSE)
 }
 \arguments{
 \item{observations}{The observed values for which to calculate entropy.}
