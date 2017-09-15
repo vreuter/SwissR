@@ -64,6 +64,6 @@ countBinnedObservations = function(observations, binBounds, pseudocount=0) {
   # Extra bin for observations < min(binBounds).
   fullCounts = numeric(1 + length(binBounds))
   obsCounts = table(findInterval(observations, binBounds))
-  fullCounts[as.numeric(names(obsCounts))] = as.vector(obsCounts)
+  fullCounts[1 + as.numeric(names(obsCounts))] = as.vector(obsCounts)
   if (0 != pseudocount) { insertPseudocounts(fullCounts, pseudocount) } else fullCounts
 }
