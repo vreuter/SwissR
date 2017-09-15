@@ -4,10 +4,17 @@
 \alias{shannonEntropy}
 \title{Calculator of Shannon entropy for a vector of observations.}
 \usage{
-shannonEntropy(observations, normalized = FALSE)
+shannonEntropy(observations, isCounts = FALSE, pseudocount = 1,
+  normalized = FALSE)
 }
 \arguments{
 \item{observations}{The observed values for which to calculate entropy.}
+
+\item{isCounts}{Does \code{observations} consist of observation counts 
+rather than actual observations?}
+
+\item{pseudocount}{Value of pseudocount to substitute for zeros; this has 
+meaning if and only if \code{counts=TRUE}.}
 
 \item{normalized}{Whether to normalize the entropy (into [0, 1]).}
 }

@@ -4,7 +4,8 @@
 \alias{entropy}
 \title{Alias for \code{shannonEntropy}}
 \usage{
-entropy(observations, normalized = FALSE)
+entropy(observations, isCounts = FALSE, pseudocount = 1,
+  normalized = FALSE)
 }
 \description{
 Alias for \code{shannonEntropy}
