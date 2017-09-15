@@ -23,7 +23,7 @@ shannonEntropy = function(observations,
   isCounts=FALSE, pseudocount=1, normalized=FALSE) {
   
   if (isCounts) {
-    num_obs = sum(counts)
+    num_obs = sum(observations)
     counts = insertPseudocounts(observations, pseudocount)
   } else {
     # Handle non-factor input.
