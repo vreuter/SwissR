@@ -22,16 +22,18 @@
 shannonEntropy = function(observations, 
   isCounts=FALSE, pseudocount=1, normalized=FALSE) {
   
-  if (isCounts) { counts = insertPseudocounts(observations, pseudocount) }
-  else {
+  if (isCounts) {
+    num_obs = sum(counts)
+    counts = insertPseudocounts(observations, pseudocount)
+  } else {
     # Handle non-factor input.
+    num_obs = length(observations)
     if (!is.factor(observations)) {
       observations = factor(observations, levels=unique(observations))
     }
     counts = sapply(X=levels(observations), FUN=function(x) sum(x == observations))
   }
 
-  num_obs = length(counts)
   probs = sapply(X=counts, FUN=function(n) n/num_obs)
   # We're protected from zero-probability cases since we've defined the 
   # domain to be the set of unique observations.
