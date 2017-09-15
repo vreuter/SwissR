@@ -41,3 +41,29 @@ insertPseudocounts = function(observations, pseudocount=1) {
   observations[which(observations == 0)] = pseudocount
   return(observations)
 }
+
+
+#' Counter of number of observations that fall into each of a number of bins
+#'
+#' \code{countBinnedObservations} takes an observations vector and a vector 
+#' of values that define the (inclusive) left endpoints of a series of 
+#' bins that will discretize the distribution of observations.
+#' 
+#' @param observations The observed values that come from a theoretically 
+#'                     continuous distribution to discretize.
+#' @param leftBinBounds The vector of values that defines the (inclusive) left 
+#'                      endpoint for each bin, that collectively will 
+#'                      discretize the hypothetically continuous distribution 
+#'                      of observations.
+#' @param pseudocount The count for any bin that contains no observations.
+#' @return Observation count for each bin.
+#' @seealso \code{\link[base]{findInterval}}
+#' @export
+countBinnedObservations = function(observations, leftBinBounds, pseudocount=0) {
+  leftBinBounds = sort(unique(leftBinBounds))    # Enforce strict increase.
+  # Extra bin for observations < min(leftBinBounds).
+  fullCounts = numeric(1 + length(leftBinBounds))
+  obsCounts = table(findInterval(observations, leftBinBounds))
+  fullCounts[as.numeric(names(obsCounts))] = as.vector(testTable)
+  if (0 != pseudocount) { insertPseudocounts(fullCounts, pseudocount) } else fullCounts
+}

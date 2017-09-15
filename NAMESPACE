@@ -2,6 +2,7 @@
 
 export(binRate)
 export(combineNamedTables)
+export(countBinnedObservations)
 export(countListItems)
 export(entropy)
 export(expandPath)
