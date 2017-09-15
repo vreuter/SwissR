@@ -22,3 +22,22 @@ divKL = function(pA, pB, base=2) {
   if (0 != sum(pA) || 0 != sum(pB)) { stop("Probability vectors must sum to 1.") }
   sum(sapply(X=1:n, FUN=function(i) pA[i]*log(pA[i]/pB[i], base=base)))
 }
+
+
+#' Assurance that each value of a vector is nonempty.
+#'
+#' \code{insertPseudocounts} takes an observation vector and a 
+#' \code{pseudocount}, replacing all zeros in \code{observations} with the
+#' \code{pseudocount}.
+#'
+#' @param observations Vector of values to ensure nonzero.
+#' @param pseudocount Value with which to replace zeros.
+#' @return Updated observations vector.
+#' @export
+insertPseudocounts = function(observations, pseudocount=1) {
+  if (!(inherits(observations, "numeric") && inherits(pseudocount, "numeric"))) {
+    stop("Observations and pseudocount must be a numeric.")
+  }
+  observations[which(observations == 0)] = pseudocount
+  return(observations)
+}
