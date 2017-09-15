@@ -28,10 +28,10 @@ shannonEntropy = function(observations,
     if (!is.factor(observations)) {
       observations = factor(observations, levels=unique(observations))
     }
-    num_obs = length(observations)
     counts = sapply(X=levels(observations), FUN=function(x) sum(x == observations))
   }
-  
+
+  num_obs = length(counts)
   probs = sapply(X=counts, FUN=function(n) n/num_obs)
   # We're protected from zero-probability cases since we've defined the 
   # domain to be the set of unique observations.
