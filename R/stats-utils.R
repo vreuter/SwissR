@@ -55,15 +55,28 @@ insertPseudocounts = function(observations, pseudocount=1) {
 #'                      endpoint for each bin, that collectively will 
 #'                      discretize the hypothetically continuous distribution 
 #'                      of observations.
+#' @param strictLowerBound Whether the lower bin bound is expected to be 
+#'                         strict. That is, no observation should fall 
+#'                         beneath it. If \code{TRUE} and this happens, 
+#'                         it's an error. If \code{TRUE} but valid, then 
+#'                         the returned counts distribution excludes the low 
+#'                         ("0") bin defined by \code{findInterval}.
 #' @param pseudocount The count for any bin that contains no observations.
 #' @return Observation count for each bin.
 #' @seealso \code{\link[base]{findInterval}}
 #' @export
-countBinnedObservations = function(observations, binBounds, pseudocount=0) {
+countBinnedObservations = function(observations, 
+  binBounds, strictLowerBound=TRUE, pseudocount=0) {
   binBounds = sort(unique(binBounds))    # Enforce strict increase.
   # Extra bin for observations < min(binBounds).
   fullCounts = numeric(1 + length(binBounds))
   obsCounts = table(findInterval(observations, binBounds))
   fullCounts[1 + as.numeric(names(obsCounts))] = as.vector(obsCounts)
-  if (0 != pseudocount) { insertPseudocounts(fullCounts, pseudocount) } else fullCounts
+  if (0 != pseudocount) {
+    fullCounts = insertPseudocounts(fullCounts, pseudocount) }
+  if (strictLowerBound) {
+    if (0 != fullCounts[1]) {
+      stop("Nonzero count of observations less than strict lower bound.") } 
+    fullCounts[-1]
+  } else { fullCounts }
 }

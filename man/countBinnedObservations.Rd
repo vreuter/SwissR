@@ -4,7 +4,8 @@
 \alias{countBinnedObservations}
 \title{Counter of number of observations that fall into each of a number of bins}
 \usage{
-countBinnedObservations(observations, binBounds, pseudocount = 0)
+countBinnedObservations(observations, binBounds, strictLowerBound = TRUE,
+  pseudocount = 0)
 }
 \arguments{
 \item{observations}{The observed values that come from a theoretically 
@@ -14,6 +15,13 @@ continuous distribution to discretize.}
 endpoint for each bin, that collectively will 
 discretize the hypothetically continuous distribution 
 of observations.}
+
+\item{strictLowerBound}{Whether the lower bin bound is expected to be 
+strict. That is, no observation should fall 
+beneath it. If \code{TRUE} and this happens, 
+it's an error. If \code{TRUE} but valid, then 
+the returned counts distribution excludes the low 
+("0") bin defined by \code{findInterval}.}
 
 \item{pseudocount}{The count for any bin that contains no observations.}
 }
