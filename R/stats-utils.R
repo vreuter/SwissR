@@ -51,7 +51,7 @@ insertPseudocounts = function(observations, pseudocount=1) {
 #' 
 #' @param observations The observed values that come from a theoretically 
 #'                     continuous distribution to discretize.
-#' @param leftBinBounds The vector of values that defines the (inclusive) left 
+#' @param binBounds The vector of values that defines the (inclusive) left 
 #'                      endpoint for each bin, that collectively will 
 #'                      discretize the hypothetically continuous distribution 
 #'                      of observations.
@@ -59,11 +59,11 @@ insertPseudocounts = function(observations, pseudocount=1) {
 #' @return Observation count for each bin.
 #' @seealso \code{\link[base]{findInterval}}
 #' @export
-countBinnedObservations = function(observations, leftBinBounds, pseudocount=0) {
-  leftBinBounds = sort(unique(leftBinBounds))    # Enforce strict increase.
-  # Extra bin for observations < min(leftBinBounds).
-  fullCounts = numeric(1 + length(leftBinBounds))
-  obsCounts = table(findInterval(observations, leftBinBounds))
-  fullCounts[as.numeric(names(obsCounts))] = as.vector(testTable)
+countBinnedObservations = function(observations, binBounds, pseudocount=0) {
+  binBounds = sort(unique(binBounds))    # Enforce strict increase.
+  # Extra bin for observations < min(binBounds).
+  fullCounts = numeric(1 + length(binBounds))
+  obsCounts = table(findInterval(observations, binBounds))
+  fullCounts[as.numeric(names(obsCounts))] = as.vector(obsCounts)
   if (0 != pseudocount) { insertPseudocounts(fullCounts, pseudocount) } else fullCounts
 }

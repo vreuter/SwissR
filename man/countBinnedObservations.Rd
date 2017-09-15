@@ -4,13 +4,13 @@
 \alias{countBinnedObservations}
 \title{Counter of number of observations that fall into each of a number of bins}
 \usage{
-countBinnedObservations(observations, leftBinBounds, pseudocount = 0)
+countBinnedObservations(observations, binBounds, pseudocount = 0)
 }
 \arguments{
 \item{observations}{The observed values that come from a theoretically 
 continuous distribution to discretize.}
 
-\item{leftBinBounds}{The vector of values that defines the (inclusive) left 
+\item{binBounds}{The vector of values that defines the (inclusive) left 
 endpoint for each bin, that collectively will 
 discretize the hypothetically continuous distribution 
 of observations.}
