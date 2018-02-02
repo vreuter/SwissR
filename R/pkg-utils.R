@@ -112,7 +112,7 @@ refreshPackage = function(packPath, local=TRUE,
     # returns so that we can provide case-specific messaging.
     
     if (is.null(nameFromUrl)) {
-      sprintf("Installed package from '%s', but it cannot be loaded with 
+      msg = sprintf("Installed package from '%s', but it cannot be loaded with 
         neither a name nor a strategy with which to infer one.", packPath)
       warning(msg)
       # Early return since we lack name and inference strategy.
