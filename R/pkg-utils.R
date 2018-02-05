@@ -78,29 +78,23 @@ refreshPackage = function(packPath, local=TRUE,
   # then the argument specifying the package may just be a name rather than 
   # a path.
   if (local && !file_test("-d", packPath)) {
-    message(sprintf(
-      "Attempting local install, trying path expansion for '%s'", packPath))
-    packPath = locatePackage(packPath)
+    codeDir = Sys.getenv("CODE")
+    if (identical("", codeDir)) { stop(sprintf("Cannot find local package: %s", packPath)) }
+    message(sprintf("Local installation requested: %s", packPath))
+    packPath = file.path(codeDir, packPath)
+    message("Expanded package path (based on CODE variable): %s", packPath)
   }
 
   # Local source for installation needs existence and explicit specification.
   if (is.null(packPath)) {
-    local = FALSE
+    stop("Null package path")
   } else {
     local = file_test("-d", packPath) && local
   }
 
   # Install.
   if (local) { devtools::install_local(packPath, force=force) }
-  else {
-    # If local installation was requested but not possible, issue warning.
-    if (local) { 
-      warning(sprintf(
-        "Could not use local install option for '%s'; does it exist?", 
-        packPath))
-    }
-    devtools::install_github(packPath, force=force)
-  }
+  else { devtools::install_github(packPath, force=force) }
 
   # Loading phase
   # First, infer name.
