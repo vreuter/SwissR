@@ -82,7 +82,7 @@ refreshPackage = function(packPath, local=TRUE,
     if (identical("", codeDir)) { stop(sprintf("Cannot find local package: %s", packPath)) }
     message(sprintf("Local installation requested: %s", packPath))
     packPath = file.path(codeDir, packPath)
-    message("Expanded package path (based on CODE variable): %s", packPath)
+    message("Expanded package path (based on CODE variable): ", packPath)
   }
 
   # Local source for installation needs existence and explicit specification.
